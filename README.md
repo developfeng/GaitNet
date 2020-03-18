@@ -9,6 +9,7 @@ GaitNet: An end-to-end network for gait based human identification,
 Pattern Recognition,
 Volume 96,
 2019
+
 If you find this code or dataset is helpful for your research, please cite our paper.
 
 Code will be released soon. 
