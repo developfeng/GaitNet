@@ -1,0 +1,411 @@
+name: "GaitNet-seg"
+
+layer {
+  name: "data"
+  type: "Python"
+  top: "im0"
+  top: "im1"
+  top: "im2"
+  top: "im3"
+  top: "im4"
+  top: "im5"
+  top: "gt0"
+  top: "gt1"
+  top: "gt2"
+  top: "gt3"
+  top: "gt4"
+  top: "gt5"
+  python_param {
+    module: 'layers'
+    layer: 'GaitNet_Seg'
+    param_str: "{'batch_size': 128,'train_num': 74,'im_path':'/home/user1/data/CASIA-B/crop-im/','gt_path':'/home/user1/data/CASIA-B/crop-seg/','mode':'TRAIN'}"
+  }
+  include{
+    phase:TRAIN
+  }
+}
+
+layer {
+  name: "data"
+  type: "Python"
+  top: "im0"
+  top: "im1"
+  top: "im2"
+  top: "im3"
+  top: "im4"
+  top: "im5"
+  top: "gt0"
+  top: "gt1"
+  top: "gt2"
+  top: "gt3"
+  top: "gt4"
+  top: "gt5"
+  python_param {
+    module: 'layers'
+    layer: 'GaitNet_Seg'
+    param_str: "{'batch_size': 10,'train_num': 74,'im_path':'/home/user1/data/CASIA-B/crop-im/','gt_path':'/home/user1/data/CASIA-B/crop-seg/','mode':'TEST'}"
+  }
+  include{
+    phase:TEST
+  }
+}
+
+layer {
+  name: "im_cube"
+  type: "Concat"
+  bottom: "im0"
+  bottom: "im1"
+  bottom: "im2"
+  bottom: "im3"
+  bottom: "im4"
+  bottom: "im5"
+  top: "im_cube"
+  concat_param {
+    axis: 0
+  }
+}
+
+layer {
+  name: "gt_cube"
+  type: "Concat"
+  bottom: "gt0"
+  bottom: "gt1"
+  bottom: "gt2"
+  bottom: "gt3"
+  bottom: "gt4"
+  bottom: "gt5"
+  top: "gt_cube"
+  concat_param {
+    axis: 0
+  }
+}
+# block 1 ----------------------------------------------------------------------------------------
+layer {
+  name: "conv1_0"
+  type: "Convolution"
+  bottom: "im_cube"
+  top: "conv1_0"
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  convolution_param {
+    num_output: 48
+    kernel_size: 5
+    pad: 0
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    
+  }
+}
+layer {
+  name: "relu1_0"
+  type: "ReLU"
+  bottom: "conv1_0"
+  top: "conv1_0"
+}
+layer {
+  name: "pool1_0"
+  type: "Pooling"
+  bottom: "conv1_0"
+  top: "pool1_0"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2    
+  }
+}
+
+# block 2 ----------------------------------------------------------------------------------------
+layer {
+  name: "conv2_0"
+  type: "Convolution"
+  bottom: "pool1_0"
+  top: "conv2_0"
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    kernel_size: 5
+    pad: 0
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    
+  }
+}
+layer {
+  name: "relu2_0"
+  type: "ReLU"
+  bottom: "conv2_0"
+  top: "conv2_0"
+}
+
+layer {
+  name: "pool2_0"
+  type: "Pooling"
+  bottom: "conv2_0"
+  top: "pool2_0"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+
+# block 3 -------------------------------------------------------------------------------------
+layer {
+  name: "conv3_0"
+  type: "Convolution"
+  bottom: "pool2_0"
+  top: "conv3_0"
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  convolution_param {
+    num_output: 192
+    kernel_size: 3
+    pad: 0
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    
+  }
+}
+layer {
+  name: "relu3_0"
+  type: "ReLU"
+  bottom: "conv3_0"
+  top: "conv3_0"
+}
+
+# block 4 ----------------------------------------------------------------------------------------
+layer {
+  name: "conv4_0"
+  type: "Convolution"
+  bottom: "conv3_0"
+  top: "conv4_0"
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  convolution_param {
+    num_output: 192
+    kernel_size: 3
+    pad: 0
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    
+  }
+}
+layer {
+  name: "relu4_0"
+  type: "ReLU"
+  bottom: "conv4_0"
+  top: "conv4_0"
+}
+
+# block 5 -----------------------------------------------------------------------------------
+layer {
+  name: "conv5_0"
+  type: "Convolution"
+  bottom: "conv4_0"
+  top: "conv5_0"
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  convolution_param {
+    num_output: 192
+    kernel_size: 3
+    pad: 0
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    
+  }
+}
+layer {
+  name: "relu5_0"
+  type: "ReLU"
+  bottom: "conv5_0"
+  top: "conv5_0"
+}
+
+# block 6 ---------------------------------------------------------------------------------------
+layer {
+  name: "conv6_0"
+  type: "Convolution"
+  bottom: "conv5_0"
+  top: "conv6_0"
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  convolution_param {
+    num_output: 1024
+    kernel_size: 7
+    pad: 0
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    
+  }
+}
+layer {
+  name: "relu6_0"
+  type: "ReLU"
+  bottom: "conv6_0"
+  top: "conv6_0"
+}
+layer {
+  name: "drop6_0"
+  type: "Dropout"
+  bottom: "conv6_0"
+  top: "conv6_0"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+# block 7 ----------------------------------------------------------------------------------------
+layer {
+  name: "conv7_0"
+  type: "Convolution"
+  bottom: "conv6_0"
+  top: "conv7_0"
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  convolution_param {
+    num_output: 1024
+    kernel_size: 1
+    pad: 0
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    
+  }
+}
+layer {
+  name: "relu7_0"
+  type: "ReLU"
+  bottom: "conv7_0"
+  top: "conv7_0"
+}
+layer {
+  name: "drop7_0"
+  type: "Dropout"
+  bottom: "conv7_0"
+  top: "conv7_0"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+# block 8 ------------------------------------------------------------------------------------
+layer {
+  name: "conv8_0"
+  type: "Deconvolution"
+  bottom: "conv7_0"
+  top: "conv8_0"
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  param {
+    lr_mult: 1
+    #decay_mult: 0
+  }
+  convolution_param {
+    num_output: 1
+    kernel_size: 64
+    pad: 0
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    
+  }
+}
+layer {
+  name: "sigmoid8_0"
+  type: "Sigmoid"
+  bottom: "conv8_0"
+  top: "conv8_0"
+}
+
+###############  Seg Loss    #####################
+layer {
+  name: "loss_seg"
+  type: "EuclideanLoss"
+  bottom: "gt_cube"
+  bottom: "conv8_0"
+  top: "loss_seg"
+  loss_weight: 1.0
+}
