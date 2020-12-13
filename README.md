@@ -1,9 +1,9 @@
 # GaitNet
 --------------------------------------------------------------------------------
-* GaitNet: An E nd-to-end Network for Gait based Human Identification *
-* Code Version 1.0                                                             *
-* By Chunfeng Song                                                             *
-* E-mail: chunfeng.song@nlpr.ia.ac.cn                                          *
+* GaitNet: An E nd-to-end Network for Gait based Human Identification 
+* Code Version 1.0                                                             
+* By Chunfeng Song                                                             
+* E-mail: chunfeng.song@nlpr.ia.ac.cn                                          
 ---------------------------------------------------------------------------------
 
 i.    Overview
