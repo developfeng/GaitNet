@@ -122,7 +122,6 @@ class GaitNet_Seg(caffe.Layer):
         top[9].data[...] = self.gt3
         top[10].data[...] = self.gt4
         top[11].data[...] = self.gt5
-        #top[12].data[...] = self.label
 
     def backward(self, top, propagate_down, bottom):
         """This layer does not propagate gradients."""
@@ -142,7 +141,6 @@ class GaitNet_Seg(caffe.Layer):
         self.gt3 = []
         self.gt4 = []
         self.gt5 = []
-        #self.label = []
 
         for i in xrange(self.batch_size):
             if self.idx != self.data_num:
@@ -177,7 +175,6 @@ class GaitNet_Seg(caffe.Layer):
                 elif chn == 5:
                     self.im5.append(im_)
                     self.gt5.append(gt_)
-            #self.label.append (self.labels[cur_idx])
             self.idx +=1
 
         self.im0 = np.array(self.im0).astype(np.float32)
@@ -192,7 +189,6 @@ class GaitNet_Seg(caffe.Layer):
         self.gt3 = np.array(self.gt3).astype(np.float32)
         self.gt4 = np.array(self.gt4).astype(np.float32)
         self.gt5 = np.array(self.gt5).astype(np.float32)
-        #self.label = np.array(self.label).astype(np.float32)
         
         # reshape tops to fit blobs
         top[0].reshape(*self.im0.shape)
@@ -208,7 +204,6 @@ class GaitNet_Seg(caffe.Layer):
         top[9].reshape(*self.gt3.shape)
         top[10].reshape(*self.gt4.shape)
         top[11].reshape(*self.gt5.shape)
-        #top[12].reshape(*self.label.shape)
 
 
 class GaitNet(caffe.Layer):
@@ -352,7 +347,6 @@ class GaitNet_Sia(caffe.Layer):
         self.data_num = len(self.im_list) # num of data pairs
         self.rnd_list = np.arange(self.data_num ) # random the images list
         shuffle(self.rnd_list)
-        #pdb.set_trace()
         
     def forward(self, bottom, top):
         # assign output
@@ -370,9 +364,6 @@ class GaitNet_Sia(caffe.Layer):
         top[11].data[...] = self.gt5
         top[12].data[...] = self.label
         top[13].data[...] = self.siam_label
-        #pdb.set_trace()
-        self.test +=1
-        #print '------------------------------------------->>>>>>>>>>>>>>%d' %self.test
 
     def backward(self, top, propagate_down, bottom):
         """This layer does not propagate gradients."""
@@ -430,7 +421,6 @@ class GaitNet_Sia(caffe.Layer):
                     self.gt5.append(gt_)
             self.label.append(self.labels[cur_idx])
             self.idx +=1
-            #pdb.set_trace()
         if self.pos_pair_mining:
             for i in xrange(self.batch_size):
                 if i > self.pos_pair_num:
@@ -492,8 +482,6 @@ class GaitNet_Sia(caffe.Layer):
         self.gt5 = np.array(self.gt5).astype(np.float32)
         self.label = np.array(self.label).astype(np.float32)
         self.siam_label = np.array(self.siam_label).astype(np.float32)
-        # reshape tops to fit blobs
-        #pdb.set_trace()
         
         top[0].reshape(*self.im0.shape)
         top[1].reshape(*self.im1.shape)
