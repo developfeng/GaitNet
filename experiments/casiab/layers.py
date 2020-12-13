@@ -2,8 +2,6 @@
 For GaitNet data layer
 
 by Chunfeng Song
-
-2017/12/07
 """
 
 import caffe
