@@ -31,7 +31,7 @@ This code should work on Caffe with Python layer (pycaffe). You can install Caff
 
 (1) Data Preparation.
 
-Download the gait datasets and their masks: CASIA-b([apply link](http://www.cbsr.ia.ac.cn/china/Gait%20Databases%20CH.asp)), Outdoor-Gait ([Baidu Yun](https://pan.baidu.com/s/1oW6u9olOZtQTYOW_8wgLow) with extract code (tjw0) OR [Google Drive](https://drive.google.com/drive/folders/1XRWq40G3Zk03YaELywxuVKNodul4TziG?usp=sharing)), and SZU RGB-D Gait ([apply link](https://faculty.sustech.edu.cn/yusq/))
+Download the gait datasets and their masks: CASIA-b([apply link](http://www.cbsr.ia.ac.cn/english/Gait%20Databases.asp)), Outdoor-Gait ([Baidu Yun](https://pan.baidu.com/s/1oW6u9olOZtQTYOW_8wgLow) with extract code (tjw0) OR [Google Drive](https://drive.google.com/drive/folders/1XRWq40G3Zk03YaELywxuVKNodul4TziG?usp=sharing)), and SZU RGB-D Gait ([apply link](https://faculty.sustech.edu.cn/yusq/))
 
 Note: All images should be pre-cropped guided by the corresponding segmentations.
 
